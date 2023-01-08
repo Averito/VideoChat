@@ -11,12 +11,6 @@ const roomsSlice = createSlice({
 		setRooms(state, { payload }: PayloadAction<string[]>) {
 			state.rooms = payload.map(roomId => ({ id: roomId }))
 		},
-		addRoom(state, { payload }: PayloadAction<string>) {
-			state.rooms.push({ id: payload })
-		},
-		removeRoom(state, { payload }: PayloadAction<string>) {
-			state.rooms = state.rooms.filter(room => room.id !== payload)
-		},
 		setCurrentRoom(state, { payload }: PayloadAction<string>) {
 			state.currentRoom = { id: payload }
 		}
@@ -24,4 +18,4 @@ const roomsSlice = createSlice({
 })
 
 export const roomsReducer = roomsSlice.reducer
-export const { setRooms, addRoom, setCurrentRoom, removeRoom } = roomsSlice.actions
+export const { setRooms, setCurrentRoom } = roomsSlice.actions

@@ -1,5 +1,5 @@
-import { FC, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import { FC, Fragment, useEffect } from 'react'
+import { Space } from 'antd'
 
 import { useAppSelector } from '@shared/hooks/useAppSelector'
 import { useAppDispatch } from '@shared/hooks/useAppDispatch'
@@ -7,6 +7,7 @@ import { socket } from '@processes/socket'
 import { Actions } from '@app/store/slices/roomsSlice/rooms.types'
 import { CreateRoom } from '@widgets/create-room'
 import { setRooms } from '@app/store/slices/roomsSlice'
+import { EnterInRoom } from '@widgets/enter-in-room'
 
 export const Home: FC = () => {
 	const dispatch = useAppDispatch()
@@ -22,10 +23,13 @@ export const Home: FC = () => {
 		<div>
 			<p>Home</p>
 			{rooms.map(room => (
-				<div key={room.id}>
-					<p>{room.id}</p>
-					<NavLink to={`/room/${room.id}`}>Войти</NavLink>
-				</div>
+				<Fragment key={room.id}>
+					<Space>
+						<span>{room.id}</span>
+						<EnterInRoom roomId={room.id} />
+					</Space>
+					<br />
+				</Fragment>
 			))}
 			<CreateRoom />
 		</div>

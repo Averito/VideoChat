@@ -16,5 +16,9 @@ export const CreateRoom: FC = () => {
 		navigate(`/room/${roomId}`)
 	}
 
-	return <AppButton width='150px' onClick={onClickCreateRoom}>Создать комнату</AppButton>
+	return (
+		<AppButton width='150px' onClick={onClickCreateRoom}>
+			Создать комнату
+		</AppButton>
+	)
 }
