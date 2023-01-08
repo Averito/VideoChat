@@ -6,5 +6,4 @@ import { SessionsService } from './sessions.service'
 @Module({
 	providers: [SessionsGateway, SessionsService]
 })
-export class SessionsModule {
-}
+export class SessionsModule {}

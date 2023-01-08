@@ -18,8 +18,7 @@ import { SessionActions } from './sessions.types'
 	cors: true
 })
 export class SessionsGateway implements OnGatewayInit, OnGatewayDisconnect, OnGatewayConnection {
-	constructor(private sessionsService: SessionsService) {
-	}
+	constructor(private sessionsService: SessionsService) {}
 
 	handleConnection() {
 		this.sessionsService.shareRoomsInfo()
@@ -43,26 +42,13 @@ export class SessionsGateway implements OnGatewayInit, OnGatewayDisconnect, OnGa
 		return this.sessionsService.leave(socket, roomId)
 	}
 
-	@SubscribeMessage(SessionActions.SHARE_ROOMS)
-	handleShareRooms(@MessageBody('rooms') rooms: string[]) {
-		return rooms
+	@SubscribeMessage(SessionActions.RELAY_SDP)
+	handleRelaySdp(@MessageBody('peerId') peerId: string, @MessageBody('sessionDescription') sessionDescription: RTCSessionDescription) {
+		return this.sessionsService.relaySdp(peerId, sessionDescription)
 	}
 
-	// @SubscribeMessage('add-peer')
-	// handleAddPeer() {}
-	//
-	// @SubscribeMessage('remove-peer')
-	// handleRemovePeer() {}
-	//
-	// @SubscribeMessage('relay-sdp')
-	// handleRelaySdp() {}
-	//
-	// @SubscribeMessage('relay-ice')
-	// handleRelayIce() {}
-	//
-	// @SubscribeMessage('ice-candidate')
-	// handleIceCandidate() {}
-	//
-	// @SubscribeMessage('session-description')
-	// handleSessionDescription() {}
+	@SubscribeMessage('relay-ice')
+	handleRelayIce(@MessageBody('peerId') peerId: string, @MessageBody('iceCandidate') iceCandidate: RTCIceCandidate) {
+		return this.sessionsService.relayIce(peerId, iceCandidate)
+	}
 }

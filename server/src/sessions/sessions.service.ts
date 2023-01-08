@@ -36,6 +36,8 @@ export class SessionsService {
 		})
 
 		socket.join(roomId)
+		console.log((this.server as any).adapter?.rooms)
+
 		this.shareRoomsInfo()
 	}
 
@@ -60,6 +62,7 @@ export class SessionsService {
 			})
 		})
 
+
 		socket.leave(roomId)
 		this.shareRoomsInfo()
 	}
@@ -72,13 +75,11 @@ export class SessionsService {
 
 			clients.forEach((clientId: string) => {
 				this.server.to(clientId).emit(SessionActions.REMOVE_PEER, {
-					peerId: socket.id,
-					createOffer: false
+					peerId: socket.id
 				})
 
 				socket.emit(SessionActions.REMOVE_PEER, {
-					peerId: clientId,
-					createOffer: false
+					peerId: clientId
 				})
 			})
 
@@ -88,12 +89,26 @@ export class SessionsService {
 		this.shareRoomsInfo()
 	}
 
-	private getClients(roomId: string) {
-		return Array.from((this.server as any).adapter?.rooms?.get(roomId) || [])
+	public relaySdp(peerId: string, sessionDescription: RTCSessionDescription) {
+		this.server.to(peerId).emit(SessionActions.SESSION_DESCRIPTION, {
+			peerId,
+			sessionDescription
+		})
 	}
 
-	private getRooms() {
+	public relayIce(peerId: string, iceCandidate: RTCIceCandidate) {
+		this.server.to(peerId).emit(SessionActions.ICE_CANDIDATE, {
+			peerId,
+			iceCandidate
+		})
+	}
+
+	public getRooms() {
 		const rooms = (this.server as any).adapter?.rooms
 		return Array.from(rooms?.keys() || []).filter((roomId: string) => validate(roomId) && version(roomId) === 4)
+	}
+
+	private getClients(roomId: string) {
+		return Array.from((this.server as any).adapter?.rooms?.get(roomId) || [])
 	}
 }
