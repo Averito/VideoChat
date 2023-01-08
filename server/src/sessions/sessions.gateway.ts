@@ -47,7 +47,7 @@ export class SessionsGateway implements OnGatewayInit, OnGatewayDisconnect, OnGa
 		return this.sessionsService.relaySdp(peerId, sessionDescription)
 	}
 
-	@SubscribeMessage('relay-ice')
+	@SubscribeMessage(SessionActions.RELAY_ICE)
 	handleRelayIce(@MessageBody('peerId') peerId: string, @MessageBody('iceCandidate') iceCandidate: RTCIceCandidate) {
 		return this.sessionsService.relayIce(peerId, iceCandidate)
 	}
