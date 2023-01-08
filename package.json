@@ -1,0 +1,23 @@
+{
+  "name": "video-chat",
+  "version": "1.0.0",
+  "description": "Video chat",
+  "main": "index.js",
+  "scripts": {
+    "client:dev": "cd client && npm run dev",
+    "client:lint": "cd client && npm run lint",
+    "server:dev": "cd server && npm run start:dev",
+    "dev": "concurrently \"npm run client:dev\" \"npm run server:dev\"",
+    "lint": "npm run client:lint",
+    "install:project": "concurrently \"cd client && npm install\" \"cd server && yarn install\""
+  },
+  "keywords": [
+    "webrtc",
+    "react",
+    "nestjs",
+    "websocket",
+    "typescript"
+  ],
+  "author": "Averito",
+  "license": "ISC"
+}
