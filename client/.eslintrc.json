@@ -36,7 +36,7 @@
         "bracketSpacing": true,
         "bracketSameLine": true,
         "proseWrap": "never",
-        "printWidth": 180
+        "printWidth": 150
       }
     ],
     "react/prop-types": 0,
@@ -45,7 +45,7 @@
     "complexity": "error",
     "max-len": [
       "warn",
-      180,
+      150,
       2
     ]
   }

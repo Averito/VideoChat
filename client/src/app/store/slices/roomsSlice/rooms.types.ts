@@ -10,6 +10,25 @@ export enum Actions {
 	SESSION_DESCRIPTION = 'session-description'
 }
 
+export interface AddPeerResponse {
+	peerId: string
+	createOffer: boolean
+}
+
+export interface RemovePeerResponse {
+	peerId: string
+}
+
+export interface SessionDescriptionResponse {
+	peerId: string
+	sessionDescription: RTCSessionDescription
+}
+
+export interface IceCandidateResponse {
+	peerId: string
+	iceCandidate: RTCIceCandidate
+}
+
 export interface IRoom {
 	id: string
 }
