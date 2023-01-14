@@ -15,12 +15,6 @@ export class SessionsService {
 	}
 
 	public join(socket: Socket, roomId: string) {
-		const { rooms: joinedRooms } = socket
-
-		if (Array.from(joinedRooms).includes(roomId)) {
-			throw new BadGatewayException(`Already joined to ${roomId}`)
-		}
-
 		const clients = this.getClients(roomId)
 
 		clients.forEach((clientId: string) => {
@@ -36,34 +30,6 @@ export class SessionsService {
 		})
 
 		socket.join(roomId)
-		console.log((this.server as any).adapter?.rooms)
-
-		this.shareRoomsInfo()
-	}
-
-	public leave(socket: Socket, roomId: string) {
-		const { rooms: joinedRooms } = socket
-
-		if (!Array.from(joinedRooms).includes(roomId)) {
-			throw new BadGatewayException(`Not connected to room ${roomId}`)
-		}
-
-		const clients = this.getClients(roomId)
-
-		clients.forEach((clientId: string) => {
-			this.server.to(clientId).emit(SessionActions.REMOVE_PEER, {
-				peerId: socket.id,
-				createOffer: false
-			})
-
-			socket.emit(SessionActions.REMOVE_PEER, {
-				peerId: clientId,
-				createOffer: false
-			})
-		})
-
-
-		socket.leave(roomId)
 		this.shareRoomsInfo()
 	}
 
@@ -89,16 +55,16 @@ export class SessionsService {
 		this.shareRoomsInfo()
 	}
 
-	public relaySdp(peerId: string, sessionDescription: RTCSessionDescription) {
+	public relaySdp(peerId: string, sessionDescription: Record<string, string>, socketId: string) {
 		this.server.to(peerId).emit(SessionActions.SESSION_DESCRIPTION, {
-			peerId,
+			peerId: socketId,
 			sessionDescription
 		})
 	}
 
-	public relayIce(peerId: string, iceCandidate: RTCIceCandidate) {
+	public relayIce(peerId: string, iceCandidate: Record<string, string>, socketId: string) {
 		this.server.to(peerId).emit(SessionActions.ICE_CANDIDATE, {
-			peerId,
+			peerId: socketId,
 			iceCandidate
 		})
 	}

@@ -1,13 +1,6 @@
-import {
-	ConnectedSocket,
-	MessageBody,
-	OnGatewayConnection,
-	OnGatewayDisconnect,
-	OnGatewayInit,
-	SubscribeMessage,
-	WebSocketGateway
-} from '@nestjs/websockets'
+import { ConnectedSocket, MessageBody, OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway } from '@nestjs/websockets'
 import { Server, Socket } from 'socket.io'
+
 import { SessionsService } from './sessions.service'
 import { SessionActions } from './sessions.types'
 
@@ -38,17 +31,25 @@ export class SessionsGateway implements OnGatewayInit, OnGatewayDisconnect, OnGa
 	}
 
 	@SubscribeMessage(SessionActions.LEAVE)
-	handleLeave(@ConnectedSocket() socket: Socket, @MessageBody('roomId') roomId: string) {
-		return this.sessionsService.leave(socket, roomId)
+	handleLeave(@ConnectedSocket() socket: Socket) {
+		return this.sessionsService.leaveAll(socket)
 	}
 
 	@SubscribeMessage(SessionActions.RELAY_SDP)
-	handleRelaySdp(@MessageBody('peerId') peerId: string, @MessageBody('sessionDescription') sessionDescription: RTCSessionDescription) {
-		return this.sessionsService.relaySdp(peerId, sessionDescription)
+	handleRelaySdp(
+		@ConnectedSocket() socket: Socket,
+		@MessageBody('peerId') peerId: string,
+		@MessageBody('sessionDescription') sessionDescription: Record<string, string>
+	) {
+		return this.sessionsService.relaySdp(peerId, sessionDescription, socket.id)
 	}
 
 	@SubscribeMessage(SessionActions.RELAY_ICE)
-	handleRelayIce(@MessageBody('peerId') peerId: string, @MessageBody('iceCandidate') iceCandidate: RTCIceCandidate) {
-		return this.sessionsService.relayIce(peerId, iceCandidate)
+	handleRelayIce(
+		@ConnectedSocket() socket: Socket,
+		@MessageBody('peerId') peerId: string,
+		@MessageBody('iceCandidate') iceCandidate: Record<string, string>
+	) {
+		return this.sessionsService.relayIce(peerId, iceCandidate, socket.id)
 	}
 }
