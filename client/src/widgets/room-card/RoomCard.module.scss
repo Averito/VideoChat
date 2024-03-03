@@ -1,0 +1,37 @@
+.container {
+  border-radius: 6px;
+  border: 1px solid #DADADA;
+  overflow: hidden;
+}
+
+.text {
+  display: flex;
+  align-items: center;
+  border-right: 1px solid #DADADA;
+  margin: 0;
+  padding: 3px 10px 3px 10px;
+  white-space: nowrap;
+  overflow: auto hidden;
+  flex: 1 1 80%;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.enterInRoom {
+  border: none;
+  color: #1F1F1F;
+  cursor: pointer;
+  height: 100%;
+  padding: 3px 10px;
+  transition: color 0.3s ease;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    color: #1677FF;
+  }
+}

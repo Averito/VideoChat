@@ -1,0 +1,41 @@
+.container {
+  border-radius: 6px;
+  border: 1px solid #DADADA;
+}
+
+.text {
+  display: flex;
+  align-items: center;
+  flex: 1 0 90%;
+  border-right: 1px solid #DADADA;
+  margin: 0;
+  padding: 3px 10px 3px 10px;
+  white-space: nowrap;
+  overflow: auto hidden;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.copyContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+  cursor: pointer;
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover .copy {
+    color: #1677FF;
+  }
+}
+
+.copy {
+  color: #1F1F1F;
+  transition: color 0.3s ease;
+}

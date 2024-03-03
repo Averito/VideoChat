@@ -33,9 +33,9 @@ dd {
 
 /* Выставляем основные настройки по-умолчанию для body */
 body {
-    color: white;
-    background: #434343;
-    min-height: 100vh;
+    color: #1F1F1F;
+    background: #ffffff;
+    font-size: 16px;
     scroll-behavior: smooth;
     text-rendering: optimizeSpeed;
     line-height: 1.5;

@@ -1,10 +1,10 @@
 import { FC } from 'react'
 import { useNavigate } from 'react-router'
+import { Button } from 'antd'
 
-import { IEnterInRoomProps } from '@widgets/enter-in-room/EnterInRoom.types'
-import { AppButton } from '@ui/buttons'
+import { IEnterInRoomProps } from '../enter-in-room/EnterInRoom.types'
 import { useAppDispatch } from '@hooks/useAppDispatch'
-import { setCurrentRoom } from '@app/store/slices/roomsSlice'
+import { setCurrentRoom } from 'app/store/roomsReducer'
 
 export const EnterInRoom: FC<IEnterInRoomProps> = props => {
 	const { roomId } = props
@@ -17,9 +17,5 @@ export const EnterInRoom: FC<IEnterInRoomProps> = props => {
 		dispatch(setCurrentRoom(roomId))
 	}
 
-	return (
-		<AppButton width={'auto'} onClick={onClickEnterInRoom}>
-			Войти
-		</AppButton>
-	)
+	return <Button onClick={onClickEnterInRoom}>Войти</Button>
 }

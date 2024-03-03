@@ -1,13 +1,7 @@
 import { useEffect, useRef } from 'react'
-import { socket } from '@processes/socket'
-import {
-	Actions,
-	AddPeerResponse,
-	IceCandidateResponse,
-	RemovePeerResponse,
-	SessionDescriptionResponse
-} from '@app/store/slices/roomsSlice/rooms.types'
-import { WebRTC } from '@processes/WebRTC'
+import { socket } from 'shared/socket'
+import { Actions, AddPeerResponse, IceCandidateResponse, RemovePeerResponse, SessionDescriptionResponse } from '@app/store/roomsReducer/rooms.types'
+import { WebRTC } from 'shared/web-rtc'
 import { useCallbackSetState } from '@hooks/useCallbackSetState'
 import { notifications } from '@utils/notifications'
 

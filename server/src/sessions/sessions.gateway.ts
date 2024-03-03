@@ -36,20 +36,12 @@ export class SessionsGateway implements OnGatewayInit, OnGatewayDisconnect, OnGa
 	}
 
 	@SubscribeMessage(SessionActions.RELAY_SDP)
-	handleRelaySdp(
-		@ConnectedSocket() socket: Socket,
-		@MessageBody('peerId') peerId: string,
-		@MessageBody('sessionDescription') sessionDescription: Record<string, string>
-	) {
+	handleRelaySdp(@ConnectedSocket() socket: Socket, @MessageBody('peerId') peerId: string, @MessageBody('sessionDescription') sessionDescription: Record<string, string>) {
 		return this.sessionsService.relaySdp(peerId, sessionDescription, socket.id)
 	}
 
 	@SubscribeMessage(SessionActions.RELAY_ICE)
-	handleRelayIce(
-		@ConnectedSocket() socket: Socket,
-		@MessageBody('peerId') peerId: string,
-		@MessageBody('iceCandidate') iceCandidate: Record<string, string>
-	) {
+	handleRelayIce(@ConnectedSocket() socket: Socket, @MessageBody('peerId') peerId: string, @MessageBody('iceCandidate') iceCandidate: Record<string, string>) {
 		return this.sessionsService.relayIce(peerId, iceCandidate, socket.id)
 	}
 }

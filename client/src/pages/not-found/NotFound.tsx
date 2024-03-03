@@ -1,14 +1,22 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 
 import styles from './NotFound.module.scss'
-import { useLocation } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
+import { Empty } from 'antd'
 
 export const NotFound: FC = () => {
 	const location = useLocation()
+	const navigate = useNavigate()
+
+	useEffect(() => {
+		setTimeout(() => {
+			navigate('/')
+		}, 3000)
+	}, [])
 
 	return (
 		<div className={styles.container}>
-			<p className={styles.text}>{location.pathname} страница не найдена</p>
+			<Empty description={`${location.pathname} страница не найдена. Через 3 секунды вы будете перенаправлены на главную...`} />
 		</div>
 	)
 }

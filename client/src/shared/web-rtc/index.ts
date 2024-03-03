@@ -1,4 +1,4 @@
-import { RTCConfig } from '@processes/WebRTC/config'
+import { RTCConfig } from '@shared/web-rtc/config'
 
 export class WebRTC extends RTCPeerConnection {
 	constructor() {

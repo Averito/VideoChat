@@ -36,6 +36,9 @@
       "@widgets/*": [
         "widgets/*"
       ],
+      "@features/*": [
+        "features/*"
+      ],
       "@ui/*": [
         "shared/ui/*"
       ],
